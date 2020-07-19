@@ -8,22 +8,21 @@ CharacterStatusApplied(_Summon, "SUMMONING", _)
 AND
 CharacterIsInCombat(_Summon, 1)
 THEN
-PROC_OBSS_ApplyBoonEffect_Finesse(_Summon);
+ProcObjectTimer(_Summon, "OBBBS_ApplyVoracityBonus", 200);
 
 IF
 ObjectEnteredCombat(_Summon, _)
 THEN
-PROC_OBSS_ApplyBoonEffect_Finesse(_Summon);
+ProcObjectTimer(_Summon, "OBBBS_ApplyVoracityBonus", 200);
 
 PROC
-PROC_OBSS_ApplyBoonEffect_Finesse((GUIDSTRING)_Summon)
+ProcObjectTimerFinished((CHARACTERGUID)_Summon, "OBBBS_ApplyVoracityBonus")
 AND
 HasActiveStatus(_Summon, "OdinBSS_BOON_VORACITY", 1)
 AND
 HasActiveStatus(_Summon, "OdinBSS_VORACITY_BONUS", 0)
 THEN
 ApplyStatus(_Summon, "OdinBSS_VORACITY_BONUS", 6.0, 1);
-// NRD_DebugLog("[OdinBSS:Story] Applied Voracity bonus");
 EXITSECTION
 
 ENDEXITSECTION

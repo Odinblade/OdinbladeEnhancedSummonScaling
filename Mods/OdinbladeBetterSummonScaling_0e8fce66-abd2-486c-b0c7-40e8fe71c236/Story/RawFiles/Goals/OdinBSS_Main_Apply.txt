@@ -23,10 +23,44 @@ DB_OBSS_Boons("Memory", "OdinBSS_BOON_MENDING", 20); // Mending
 DB_OBSS_Boons("Wits", "OdinBSS_BOON_ARTILLERY", 25); // Artillery
 
 KBSECTION
+//REGION OdinCore menu
+// Set dialog flag for OdinCore menu
+IF
+GameStarted(_, _)
+THEN
+GlobalSetFlag("OdinBSS_Enabled");
+
+IF
+SavegameLoaded(_, _, _, _)
+AND
+GlobalGetFlag("OdinBSS_Enabled", 0)
+THEN
+GlobalSetFlag("OdinBSS_Enabled");
+//END_REGION
+
 IF
 CharacterStatusAttempt(_Summon, "SUMMONING", _)
 AND
 CharacterGetOwner(_Summon, _Owner)
+AND
+DB_IsPlayer(_Owner)
+THEN
+DB_OBSS_Summon_Instance(_Owner, _Summon);
+PROC_OBSS_ApplyBoosts(_Summon);
+PROC_OBSS_ApplyBoons(_Summon);
+PROC_OBSS_RestoreValues(_Summon); // Fixes UI not updating
+
+//OdinCORE_BSS_Setting
+IF
+CharacterStatusAttempt(_Summon, "SUMMONING", _)
+AND
+CharacterGetOwner(_Summon, _Owner)
+AND
+NOT DB_IsPlayer(_Owner)
+AND
+GlobalGetFlag("OdinCORE_BSS_Setting", _State)
+AND
+_State == 1
 THEN
 DB_OBSS_Summon_Instance(_Owner, _Summon);
 PROC_OBSS_ApplyBoosts(_Summon);
@@ -88,6 +122,7 @@ AND
 StringConcatenate("[OdinBSS:Story] Granting summon boon: ", _Status, _DebugLog)
 THEN
 ApplyStatus(_Summon, _Status, -1.0);
+ApplyStatus(_Summon, "OdinBSS_BOONS", -1.0);
 // NRD_DebugLog(_DebugLog);
 
 //REGION Vitality UI fix
