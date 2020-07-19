@@ -1,0 +1,120 @@
+Version 1
+SubGoalCombiner SGC_AND
+INITSECTION
+DB_OBSS_Boost("Strength", "FireResistance", 0.5);
+DB_OBSS_Boost("Strength", "EarthResistance", 0.5);
+DB_OBSS_Boost("Strength", "WaterResistance", 0.5);
+DB_OBSS_Boost("Strength", "AirResistance", 0.5);
+DB_OBSS_Boost("Strength", "PoisonResistance", 0.5);
+DB_OBSS_Boost("Strength", "PhysicalResistance", 0.5);
+DB_OBSS_Boost("Strength", "PiercingResistance", 0.5);
+DB_OBSS_Boost("Intelligence", "DamageBoost", 1.0);
+DB_OBSS_Boost("Finesse", "CriticalChance", 1.0);
+DB_OBSS_Boost("Constitution", "VitalityBoost", 3.0);
+DB_OBSS_Boost("Memory", "ArmorBoost", 1.5);
+DB_OBSS_Boost("Memory", "MagicArmorBoost", 1.5);
+DB_OBSS_Boost("Wits", "RangeBoost", 25.0);
+
+DB_OBSS_Boons("Strength", "OdinBSS_BOON_AGGREVATION", 25); // Aggrevation
+DB_OBSS_Boons("Intelligence", "OdinBSS_BOON_CHAOS", 25); // Chaos
+DB_OBSS_Boons("Finesse", "OdinBSS_BOON_VORACITY", 25); // Voracity
+DB_OBSS_Boons("Constitution", "OdinBSS_BOON_REDIRECTION", 20); // Redirection
+DB_OBSS_Boons("Memory", "OdinBSS_BOON_MENDING", 20); // Mending
+DB_OBSS_Boons("Wits", "OdinBSS_BOON_ARTILLERY", 25); // Artillery
+
+KBSECTION
+IF
+CharacterStatusAttempt(_Summon, "SUMMONING", _)
+AND
+CharacterGetOwner(_Summon, _Owner)
+THEN
+DB_OBSS_Summon_Instance(_Owner, _Summon);
+PROC_OBSS_ApplyBoosts(_Summon);
+PROC_OBSS_ApplyBoons(_Summon);
+PROC_OBSS_RestoreValues(_Summon); // Fixes UI not updating
+
+// Remove DB entry when the Summon dies
+IF
+CharacterDied(_Summon)
+AND
+DB_OBSS_Summon_Instance(_Owner, _Summon)
+THEN
+NOT DB_OBSS_Summon_Instance(_Owner, _Summon);
+// NRD_DebugLog("[OdinBSS:Story] Removed Summon from DB");
+
+// Apply boosts to the summon based on the owner's primary attribute values
+PROC
+PROC_OBSS_ApplyBoosts((CHARACTERGUID)_Summon)
+AND
+DB_OBSS_Boost(_Attribute, _BoostToApply, _BoostAmount)
+AND
+CharacterGetOwner(_Summon, _Owner)
+AND
+CharacterGetAttribute(_Owner, _Attribute, _OwnerAttributeValue)
+AND
+Real(_OwnerAttributeValue, _OwnerAttributeValueReal)
+AND
+RealSubtract(_OwnerAttributeValueReal, 10.0, _BoostMultiplier)
+AND
+_BoostMultiplier >= 1
+AND
+RealProduct(_BoostAmount, _BoostMultiplier, _Boost)
+AND
+Integer(_Boost, _BoostInt)
+AND
+IntegertoString(_BoostInt, _BoostString)
+AND
+StringConcatenate("[OdinBSS:Story] Increasing Summon ", _BoostToApply, _DebugFrag1)
+AND
+StringConcatenate(_DebugFrag1, " by: ", _DebugFrag2)
+AND
+StringConcatenate(_DebugFrag2, _BoostString, _DebugLog)
+THEN
+NRD_CharacterSetPermanentBoostInt(_Summon, _BoostToApply, _BoostInt);
+CharacterAddAttribute(_Summon, "", 0); // Triggers client UI to update
+// NRD_DebugLog(_DebugLog);
+
+PROC
+PROC_OBSS_ApplyBoons((CHARACTERGUID)_Summon)
+AND
+DB_OBSS_Boons(_Attribute, _Status, _Threshold)
+AND
+CharacterGetOwner(_Summon, _Owner)
+AND
+CharacterGetAttribute(_Owner, _Attribute, _OwnerAttributeValue)
+AND
+_OwnerAttributeValue >= _Threshold
+AND
+StringConcatenate("[OdinBSS:Story] Granting summon boon: ", _Status, _DebugLog)
+THEN
+ApplyStatus(_Summon, _Status, -1.0);
+// NRD_DebugLog(_DebugLog);
+
+//REGION Vitality UI fix
+// If Summon is a totem, delay restore because it's buggy af
+PROC
+PROC_OBSS_RestoreValues((CHARACTERGUID)_Summon)
+THEN
+ProcObjectTimer(_Summon, "OdinBSS_VITALITY_FIX_TOTEM", 125);
+
+// Totem Vitality is pretty weird in the UI. This refreshes the value to update the new max vitality
+PROC
+ProcObjectTimerFinished((CHARACTERGUID)_Summon, "OdinBSS_VITALITY_FIX_TOTEM")
+AND
+NRD_CharacterGetStatInt(_Summon, "MaxVitality", _Vitality)
+AND
+IntegerSubtract(_Vitality, 1, _TempVitality)
+THEN
+NRD_CharacterSetStatInt(_Summon, "CurrentVitality", _TempVitality);
+ProcObjectTimer(_Summon, "OdinBSS_VITALITY_FIX_RESTORE", 50);
+
+PROC
+ProcObjectTimerFinished((CHARACTERGUID)_Summon, "OdinBSS_VITALITY_FIX_RESTORE")
+AND
+NRD_CharacterGetStatInt(_Summon, "MaxVitality", _Vitality)
+THEN
+NRD_CharacterSetStatInt(_Summon, "CurrentVitality",_Vitality);
+//END_REGION
+EXITSECTION
+
+ENDEXITSECTION

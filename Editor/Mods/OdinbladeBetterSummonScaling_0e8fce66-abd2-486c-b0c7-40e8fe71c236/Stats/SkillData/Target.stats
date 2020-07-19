@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<stats stat_object_definition_id="e988a674-28fe-49d2-a6ce-c5c1e0141f4c">
+  <stat_objects>
+    <stat_object is_substat="false">
+      <fields>
+        <field name="Name" type="NameStatObjectFieldDefinition" value="OdinBSS_REDIRECTION_DESIGNATE" />
+        <field name="ForGameMaster" type="EnumerationStatObjectFieldDefinition" value="0" enumeration_type_name="YesNo" />
+        <field name="Ability" type="EnumerationStatObjectFieldDefinition" value="10" enumeration_type_name="SkillAbility" />
+        <field name="Tier" type="EnumerationStatObjectFieldDefinition" value="0" enumeration_type_name="SkillTier" />
+        <field name="ActionPoints" type="IntegerStatObjectFieldDefinition" value="0" />
+        <field name="Cooldown" type="IntegerStatObjectFieldDefinition" value="-1" />
+        <field name="SkillProperties" type="StringStatObjectFieldDefinition" value="OdinBSS_REDIRECTION_EFFECT,100,-1" />
+        <field name="TargetRadius" type="IntegerStatObjectFieldDefinition" value="13" />
+        <field name="AddWeaponRange" type="EnumerationStatObjectFieldDefinition" value="0" enumeration_type_name="YesNo" />
+        <field name="CanTargetCharacters" type="EnumerationStatObjectFieldDefinition" value="1" enumeration_type_name="YesNo" />
+        <field name="CanTargetItems" type="EnumerationStatObjectFieldDefinition" value="0" enumeration_type_name="YesNo" />
+        <field name="CanTargetTerrain" type="EnumerationStatObjectFieldDefinition" value="0" enumeration_type_name="YesNo" />
+        <field name="Memory Cost" type="IntegerStatObjectFieldDefinition" value="0" />
+        <field name="Magic Cost" type="IntegerStatObjectFieldDefinition" value="0" />
+        <field name="TargetConditions" type="StringStatObjectFieldDefinition" value="MySummon;Ally;HasStatus:OdinBSS_BOON_REDIRECTION" />
+        <field name="UseCharacterStats" type="EnumerationStatObjectFieldDefinition" value="0" enumeration_type_name="YesNo" />
+        <field name="UseWeaponDamage" type="EnumerationStatObjectFieldDefinition" value="0" enumeration_type_name="YesNo" />
+        <field name="UseWeaponProperties" type="EnumerationStatObjectFieldDefinition" value="0" enumeration_type_name="YesNo" />
+        <field name="Icon" type="StringStatObjectFieldDefinition" value="OBBSS_Skill_DesignateRedirection" />
+        <field name="DisplayName" type="TranslatedStringStatObjectFieldDefinition" value="Designate Redirection" />
+        <field name="Description" type="TranslatedStringStatObjectFieldDefinition" value="Target one of your &lt;font color='#7F25D4'&gt;Summons&lt;/font&gt; which currently has the &lt;font color='#7F25D4'&gt;Boon of Redirection&lt;/font&gt; status. &lt;br&gt;&lt;br&gt;Whenever you would take damage, redirect &lt;font color='#40b606'&gt;30% of that damage&lt;/font&gt; to the &lt;font color='#7F25D4'&gt;Summon&lt;/font&gt; instead." />
+        <field name="FXScale" type="IntegerStatObjectFieldDefinition" value="100" />
+        <field name="PrepareAnimationInit" type="StringStatObjectFieldDefinition" value="skill_prepare_divine_01_start" />
+        <field name="PrepareAnimationLoop" type="StringStatObjectFieldDefinition" value="skill_prepare_divine_01_loop" />
+        <field name="PrepareEffect" type="StringStatObjectFieldDefinition" value="RS3_FX_Skills_Divine_Prepare_Divine_Farsight_Root_01,KeepRot,Detach:Dummy_Root;RS3_FX_Skills_Divine_Prepare_Divine_Farsight_Hand_01:Dummy_R_HandFX;RS3_FX_Skills_Divine_Prepare_Divine_Hand_01:Dummy_R_HandFX:hand01;RS3_FX_Skills_Divine_Prepare_Divine_Hand_02:Dummy_L_HandFX:hand02" />
+        <field name="CastAnimation" type="StringStatObjectFieldDefinition" value="skill_cast_aoe_divine_01_cast" />
+        <field name="CastSelfAnimation" type="StringStatObjectFieldDefinition" value="skill_cast_aoe_divine_01_cast" />
+        <field name="CastTextEvent" type="StringStatObjectFieldDefinition" value="cast" />
+        <field name="CastEffect" type="StringStatObjectFieldDefinition" value="RS3_FX_Skills_Divine_Cast_Aoe_Farsight_Hand_01:Dummy_L_HandFX:cast" />
+        <field name="TargetEffect" type="StringStatObjectFieldDefinition" value="RS3_FX_Skills_Divine_Farsight_Cast_Root_01:root:cast" />
+        <field name="CycleConditions" type="StringStatObjectFieldDefinition" value="MySummon;Ally;HasStatus:OdinBSS_BOON_REDIRECTION" />
+        <field name="Requirements" type="StringStatObjectFieldDefinition" value="Combat" />
+      </fields>
+    </stat_object>
+  </stat_objects>
+</stats>

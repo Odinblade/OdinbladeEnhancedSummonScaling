@@ -1,0 +1,245 @@
+Version 1
+SubGoalCombiner SGC_AND
+INITSECTION
+// DB_OBBSS_SummonScaling_Boost("Strength", "FireResistance", 0.5);
+// DB_OBBSS_SummonScaling_Boost("Strength", "EarthResistance", 0.5);
+// DB_OBBSS_SummonScaling_Boost("Strength", "WaterResistance", 0.5);
+// DB_OBBSS_SummonScaling_Boost("Strength", "AirResistance", 0.5);
+// DB_OBBSS_SummonScaling_Boost("Strength", "PoisonResistance", 0.5);
+// DB_OBBSS_SummonScaling_Boost("Strength", "PhysicalResistance", 0.5);
+// DB_OBBSS_SummonScaling_Boost("Strength", "PiercingResistance", 0.5);
+// DB_OBBSS_SummonScaling_Boost("Intelligence", "DamageBoost", 1.0);
+// DB_OBBSS_SummonScaling_Boost("Finesse", "CriticalChance", 1.0);
+// DB_OBBSS_SummonScaling_Boost("Constitution", "VitalityBoost", 3.0);
+// DB_OBBSS_SummonScaling_Boost("Memory", "ArmorBoost", 1.5);
+// DB_OBBSS_SummonScaling_Boost("Memory", "MagicArmorBoost", 1.5);
+// DB_OBBSS_SummonScaling_Boost("Wits", "Dodge", 1.0);
+// DB_OBBSS_SummonScaling_Boost("Wits", "Movement", 50.0);
+// // DB_OBBSS_SummonScaling_Boost("Wits", "APRecovery", 0.1);
+
+// DB_OBSS_SummonScaling_Status("Strength", "OdinBSS_FOLLOWME");
+
+// // TO REMOVE
+// DB_OBSS_SummonScaling_Talent("Intelligence", "FaroutDude" , "", 25, 1); // Farout man
+// DB_OBSS_SummonScaling_Talent("Finesse", "ViolentMagic", "", 25, 1); // Savage sortilege
+// DB_OBSS_SummonScaling_Talent("Constitution", "Leech", "", 20, 1); // Leech
+// // DB_OBSS_SummonScaling_Talent("Memory", "LivingArmor", "", 20, 1); // Living Armour
+// DB_OBSS_SummonScaling_Talent("Wits", "Perfectionist", "", 25, 1); // Hothead
+
+// GlobalSetFlag("OdinBSS_Fix_V1_DB");
+
+KBSECTION
+// IF
+// SavegameLoaded(_,_,_,_)
+// AND
+// NOT DB_GlobalFlag("OdinBSS_Fix_V1_DB")
+// THEN
+// GlobalSetFlag("OdinBSS_Fix_V1_DB");
+// NRD_DebugLog("[OdinBSS:Story] Save fix: Applying...");
+// PROC_OBBSS_Fix_Savegame_DBs();
+// PROC_OBBSS_Fix_Savegame_DBs_AddNew();
+
+// PROC
+// PROC_OBBSS_Fix_Savegame_DBs()
+// AND
+// DB_OBBSS_SummonScaling_Boost("Constitution", _BoostToApply, _BoostAmount)
+// THEN
+// NOT DB_OBBSS_SummonScaling_Boost("Constitution", _BoostToApply, _BoostAmount);
+// NRD_DebugLog("[OdinBSS:Story] Save fix: Cleared one dead DB_OBBSS_SummonScaling_Boost entry.");
+
+// PROC
+// PROC_OBBSS_Fix_Savegame_DBs()
+// AND
+// DB_OBBSS_SummonScaling_Boost("Memory", _BoostToApply, _BoostAmount)
+// THEN
+// NOT DB_OBBSS_SummonScaling_Boost("Memory", _BoostToApply, _BoostAmount);
+// NRD_DebugLog("[OdinBSS:Story] Save fix: Cleared one dead DB_OBBSS_SummonScaling_Boost entry.");
+
+// PROC
+// PROC_OBBSS_Fix_Savegame_DBs_AddNew()
+// THEN
+// DB_OBSS_SummonScaling_Talent("Strength", "NoAttackOfOpportunity", "RangerLore", 25, 0); // Duck Duck Goose
+// DB_OBSS_SummonScaling_Talent("Intelligence", "FaroutDude" , "", 25, 1); // Farout man
+// DB_OBSS_SummonScaling_Talent("Finesse", "ViolentMagic", "", 25, 1); // Savage sortilege
+// DB_OBSS_SummonScaling_Talent("Constitution", "Leech", "", 20, 1); // Leech
+// DB_OBSS_SummonScaling_Talent("Memory", "LivingArmor", "", 20, 1); // Living Armour
+// DB_OBSS_SummonScaling_Talent("Wits", "Perfectionist", "", 25, 1); // Hothead
+// // DB_OBBSS_SummonScaling_Boost_Delay("Constitution", "VitalityBoost", 1.0);
+// // DB_OBBSS_SummonScaling_Boost_Delay("Memory", "ArmorBoost", 1.5);
+// // DB_OBBSS_SummonScaling_Boost_Delay("Memory", "MagicArmorBoost", 1.5);
+
+// // Triggers when a Summon is summoned
+// IF
+// CharacterStatusAttempt(_Summon, "SUMMONING", _)
+// AND
+// CharacterGetOwner(_Summon, _Owner)
+// THEN
+// DB_OBSS_Summon_Instance(_Owner, _Summon);
+// PROC_OBSS_ApplyBoosts(_Summon);
+// PROC_OBSS_ApplyStatuses(_Summon);
+// PROC_OBSS_RestoreValues(_Summon); // Fixes UI not updating
+// NRD_DebugLog("[OdinBSS:Story] Added Summon to DB");
+
+// // Remove DB entry when the Summon dies
+// IF
+// CharacterDied(_Summon)
+// AND
+// DB_OBSS_Summon_Instance(_Owner, _Summon)
+// THEN
+// NOT DB_OBSS_Summon_Instance(_Owner, _Summon);
+// NRD_DebugLog("[OdinBSS:Story] Removed Summon from DB");
+
+// IF
+// CharacterStatusApplied(_Summon, "SUMMONING", _)
+// THEN
+// PROC_OBSS_ApplyTalents(_Summon);
+
+// // Apply boosts to the summon based on the owner's primary attribute values
+// PROC
+// PROC_OBSS_ApplyBoosts((CHARACTERGUID)_Summon)
+// AND
+// DB_OBBSS_SummonScaling_Boost(_Attribute, _BoostToApply, _BoostAmount)
+// AND
+// CharacterGetOwner(_Summon, _Owner)
+// AND
+// CharacterGetAttribute(_Owner, _Attribute, _OwnerAttributeValue)
+// AND
+// Real(_OwnerAttributeValue, _OwnerAttributeValueReal)
+// AND
+// RealSubtract(_OwnerAttributeValueReal, 10.0, _BoostMultiplier)
+// AND
+// _BoostMultiplier >= 1
+// AND
+// RealProduct(_BoostAmount, _BoostMultiplier, _Boost)
+// AND
+// Integer(_Boost, _BoostInt)
+// AND
+// IntegertoString(_BoostInt, _BoostString)
+// AND
+// StringConcatenate("[OdinBSS:Story] Increasing Summon ", _BoostToApply, _DebugFrag1)
+// AND
+// StringConcatenate(_DebugFrag1, " by: ", _DebugFrag2)
+// AND
+// StringConcatenate(_DebugFrag2, _BoostString, _DebugLog)
+// THEN
+// NRD_DebugLog(_DebugLog);
+// NRD_CharacterSetPermanentBoostInt(_Summon, _BoostToApply, _BoostInt);
+// CharacterAddAttribute(_Summon, "", 0); // Triggers client UI to update
+
+// // Apply talents to Summons
+// PROC
+// PROC_OBSS_ApplyTalents((CHARACTERGUID)_Summon)
+// // AND
+// // NRD_CharacterGetInt(_Summon, "Totem", 0)
+// AND
+// DB_OBSS_SummonScaling_Talent(_Attribute, _Talent, _RequiredAbilityBoost, _Threshold, _)
+// AND
+// CharacterGetOwner(_Summon, _Owner)
+// AND
+// CharacterGetAttribute(_Owner, _Attribute, _OwnerAttributeValue)
+// AND
+// _OwnerAttributeValue >= _Threshold
+// AND
+// StringConcatenate("[OdinBSS:Story] Granting summon talent: ", _Talent, _DebugLogCD)
+// THEN
+// CharacterAddTalentPoint(_Summon, 1);
+// // CharacterAddTalent(_Summon, _Talent);
+// PROC_OBSS_ApplyNeededAbilityBoosts(_Summon, _Talent, _RequiredAbilityBoost);
+// NRD_CharacterSetPermanentBoostTalent(_Summon, _Talent, 1);
+// NRD_PlayerSetBaseTalent(_Summon, _Talent, 1);
+// CharacterAddCivilAbilityPoint(_Summon, 0);
+// // NRD_DebugLog(_DebugLogCD);
+
+// // Apply statuses to Summons DE-HARDCODE MEH PLS
+// PROC
+// PROC_OBSS_ApplyStatuses((CHARACTERGUID)_Summon)
+// AND
+// NRD_CharacterGetInt(_Summon, "Totem", 0)
+// AND
+// DB_OBSS_SummonScaling_Status(_Attribute, _StatusToApply)
+// AND
+// CharacterGetOwner(_Summon, _Owner)
+// AND
+// CharacterGetAttribute(_Owner, _Attribute, _OwnerAttributeValue)
+// AND
+// _OwnerAttributeValue >= 25
+// AND
+// _Attribute == "Strength"
+// THEN
+// SetTag(_Summon, "AI_PREFERRED_TARGET");
+// // NRD_DebugLog("[OdinBSS:Story] Applied AI_PREFERRED_TARGET tag for Strength");
+
+// // If the talent needs a point in something the summon does not have, grant it
+// PROC
+// PROC_OBSS_ApplyNeededAbilityBoosts((CHARACTERGUID)_Summon, (STRING)_Talent, (STRING)_RequiredAbilityBoost)
+// AND
+// _RequiredAbilityBoost != ""
+// AND
+// CharacterGetAbility(_Summon, _RequiredAbilityBoost, _CurrentAbilityPoints)
+// AND
+// _CurrentAbilityPoints < 1
+// AND
+// StringConcatenate("[OdinBSS:Story] Granting required ability: ", _RequiredAbilityBoost, _DebugLogCD)
+// THEN
+// NRD_PlayerSetBaseAbility(_Summon, _RequiredAbilityBoost, 1);
+// CharacterAddAttribute(_Summon, "", 0);
+
+// //REGION UI number fixes
+// //If Summon is a non-totem, restore values after boosting because it's buggy af
+// // PROC
+// // PROC_OBSS_RestoreValues((CHARACTERGUID)_Summon)
+// // // AND
+// // // NRD_CharacterGetInt(_Summon, "Totem", 0)
+// // THEN
+// // // ApplyStatus(_Summon, "DALLIS_TRANSFORMRESTORE", 0.0);
+// // ProcObjectTimer(_Summon, "OdinBSS_VITALITY_FIX_SUMMON", 500);
+
+// // PROC
+// // ProcObjectTimerFinished((CHARACTERGUID)_Summon, "OdinBSS_VITALITY_FIX_SUMMON")
+// // AND
+// // NRD_CharacterGetStatInt(_Summon, "MaxVitality", _Vitality)
+// // AND
+// // IntegertoString(_Vitality, _VitalityString)
+// // THEN
+// // // PROC_OBSS_ApplyTalents(_Summon);
+// // NRD_DebugLog("Max Vitality:");
+// // NRD_DebugLog(_VitalityString);
+// // NRD_CharacterSetStatInt(_Summon, "CurrentVitality", _Vitality);
+
+// // ApplyStatus(_Summon, "DALLIS_TRANSFORMRESTORE", 0.0);
+// // NRD_CharacterSetStatInt(_Summon, "CurrentVitality", _Vitality);
+// // CharacterSetArmorPercentage(_Summon, 100.0);
+// // CharacterSetMagicArmorPercentage(_Summon, 100.0);
+// // CharacterSetHitpointsPercentage(_Summon, 100.0);
+
+// // If Summon is a totem, delay restore because it's buggy af
+// PROC
+// PROC_OBSS_RestoreValues((CHARACTERGUID)_Summon)
+// // AND
+// // NRD_CharacterGetInt(_Summon, "Totem", 1)
+// THEN
+// ProcObjectTimer(_Summon, "OdinBSS_VITALITY_FIX_TOTEM", 125);
+
+// // Totem Vitality is pretty weird in the UI. This refreshes the value to update the new max vitality
+// PROC
+// ProcObjectTimerFinished((CHARACTERGUID)_Summon, "OdinBSS_VITALITY_FIX_TOTEM")
+// // AND
+// // NRD_CharacterGetInt(_Summon, "Totem", 1)
+// AND
+// NRD_CharacterGetStatInt(_Summon, "MaxVitality", _Vitality)
+// AND
+// IntegerSubtract(_Vitality, 1, _TempVitality)
+// THEN
+// NRD_CharacterSetStatInt(_Summon, "CurrentVitality", _TempVitality);
+// ProcObjectTimer(_Summon, "OdinBSS_VITALITY_FIX_RESTORE", 50);
+
+// PROC
+// ProcObjectTimerFinished((CHARACTERGUID)_Summon, "OdinBSS_VITALITY_FIX_RESTORE")
+// AND
+// NRD_CharacterGetStatInt(_Summon, "MaxVitality", _Vitality)
+// THEN
+// NRD_CharacterSetStatInt(_Summon, "CurrentVitality",_Vitality);
+// //END_REGION
+EXITSECTION
+
+ENDEXITSECTION

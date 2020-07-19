@@ -1,0 +1,12 @@
+new entry "Stats_OdinBSS_Artillery_Bonus"
+type "Potion"
+data "Act" "1"
+data "Act part" "0"
+data "DamageBoost" "20"
+
+new entry "Stats_OdinBSS_Voracity_Bonus"
+type "Potion"
+data "APMaximum" "1"
+data "APStart" "1"
+data "APRecovery" "1"
+

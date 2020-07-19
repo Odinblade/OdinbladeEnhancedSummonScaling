@@ -1,0 +1,78 @@
+Version 1
+SubGoalCombiner SGC_AND
+INITSECTION
+
+KBSECTION
+// Apply the bonus at the start of the turn
+IF
+ObjectTurnStarted(_Summon)
+AND
+HasActiveStatus(_Summon, "OdinBSS_BOON_ARTILLERY", 1)
+AND
+GetPosition(_Summon, _X, _Y, _Z)
+THEN
+ApplyStatus(_Summon, "OdinBSS_ARTILLERY_BONUS", 6.0);
+DB_OBSS_TrackPosition(_Summon, _X, _Y, _Z);
+ProcObjectTimer(_Summon, "OdinBSS_CHECK_POSITION", 100);
+
+// Remove the bonus at the end of the turn
+IF
+ObjectTurnEnded(_Summon)
+AND
+HasActiveStatus(_Summon, "OdinBSS_ARTILLERY_BONUS", 1)
+THEN
+RemoveStatus(_Summon, "OdinBSS_ARTILLERY_BONUS");
+
+// Loop the position-checker
+PROC
+ProcObjectTimerFinished((CHARACTERGUID)_Summon, "OdinBSS_CHECK_POSITION")
+THEN
+ProcObjectTimer(_Summon, "OdinBSS_CHECK_POSITION", 100);
+
+// X pos changes
+PROC
+ProcObjectTimerFinished((CHARACTERGUID)_Summon, "OdinBSS_CHECK_POSITION")
+AND
+DB_OBSS_TrackPosition(_Summon, _X, _Y, _Z)
+AND
+GetPosition(_Summon, _nX, _nY, _nZ)
+AND
+_nX != _X
+THEN
+ProcObjectTimerCancel(_Summon, "OdinBSS_CHECK_POSITION");
+
+// Y pos changes
+PROC
+ProcObjectTimerFinished((CHARACTERGUID)_Summon, "OdinBSS_CHECK_POSITION")
+AND
+DB_OBSS_TrackPosition(_Summon, _X, _Y, _Z)
+AND
+GetPosition(_Summon, _nX, _nY, _nZ)
+AND
+_nY != _Y
+THEN
+ProcObjectTimerCancel(_Summon, "OdinBSS_CHECK_POSITION");
+
+// Z pos changes
+PROC
+ProcObjectTimerFinished((CHARACTERGUID)_Summon, "OdinBSS_CHECK_POSITION")
+AND
+DB_OBSS_TrackPosition(_Summon, _X, _Y, _Z)
+AND
+GetPosition(_Summon, _nX, _nY, _nZ)
+AND
+_nZ != _Z
+THEN
+ProcObjectTimerCancel(_Summon, "OdinBSS_CHECK_POSITION");
+
+// Remove that bonus and entry from DB
+PROC
+ProcObjectTimerCancel((CHARACTERGUID)_Summon, "OdinBSS_CHECK_POSITION")
+AND
+DB_OBSS_TrackPosition(_Summon, _X, _Y, _Z)
+THEN
+NOT DB_OBSS_TrackPosition(_Summon, _X, _Y, _Z);
+RemoveStatus(_Summon, "OdinBSS_ARTILLERY_BONUS");
+EXITSECTION
+
+ENDEXITSECTION

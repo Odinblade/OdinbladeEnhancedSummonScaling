@@ -1,0 +1,78 @@
+Version 1
+SubGoalCombiner SGC_AND
+INITSECTION
+DB_OBSS_DamageType("Physical");
+DB_OBSS_DamageType("Poison");
+DB_OBSS_DamageType("Fire");
+DB_OBSS_DamageType("Water");
+DB_OBSS_DamageType("Air");
+DB_OBSS_DamageType("Piercing");
+DB_OBSS_DamageType("Earth");
+DB_OBSS_DamageType("Chaos");
+
+KBSECTION
+IF
+CharacterStatusApplied(_Summon, "OdinBSS_BOON_REDIRECTION", _)
+AND
+CharacterGetOwner(_Summon, _Owner)
+AND
+CharacterHasSkill(_Owner, "Target_OdinBSS_REDIRECTION_DESIGNATE", 0)
+THEN
+CharacterAddSkill(_Owner, "Target_OdinBSS_REDIRECTION_DESIGNATE", 1);
+
+IF
+ObjectLeftCombat(_Owner, _)
+AND
+DB_OBSS_Summon_Instance((CHARACTERGUID)_Owner, _Summon)
+AND
+HasActiveStatus(_Summon, "OdinBSS_REDIRECTION_EFFECT", 1)
+THEN
+RemoveStatus(_Summon, "OdinBSS_REDIRECTION_EFFECT");
+
+//Owner is hit by damage which does not originate from the summon
+IF
+NRD_OnHit(_Owner, _Source, _, _HitHandle)
+AND
+DB_OBSS_Summon_Instance((CHARACTERGUID)_Owner, _Summon)
+AND
+HasActiveStatus(_Summon, "OdinBSS_REDIRECTION_EFFECT", 1)
+AND
+NRD_StatusGetInt(_Owner, _HitHandle, "Hit", 1)
+AND
+NRD_StatusGetInt(_Owner, _HitHandle, "Reflection", 0)
+THEN
+PROC_OBSS_ApplyBoonEffect_Constitution(_Owner, _Summon, _Source, _HitHandle);
+// NRD_DebugLog("[OdinBSS:Story] Beginning damage split...");
+
+//Calculate how much damage to cut from the original target and move to the shared target
+PROC
+PROC_OBSS_ApplyBoonEffect_Constitution((CHARACTERGUID)_Owner, (GUIDSTRING)_Summon, (GUIDSTRING)_Source, (INTEGER64)_HitHandle)
+AND
+DB_OBSS_DamageType(_PreDamageType)
+AND
+NRD_HitStatusGetDamage(_Owner, _HitHandle, _PreDamageType, _Damage)
+AND
+_Damage > 0
+AND
+IntegerDivide(_Damage, 3, _SharedDamage) // 30% of damage
+AND
+IntegerSubtract(_Damage, _SharedDamage, _OwnerDamage)
+THEN
+NRD_HitStatusClearDamage(_Owner, _HitHandle, _PreDamageType);
+NRD_HitStatusAddDamage(_Owner, _HitHandle, _PreDamageType, _OwnerDamage);
+PROC_OBSS_SharedDamage(_Owner, _Summon, _Source, _SharedDamage, _PreDamageType);
+// NRD_DebugLog("[OdinBSS:Story] About to apply the damage redirection...");
+
+//Apply the damage to the shared target
+PROC
+PROC_OBSS_SharedDamage((GUIDSTRING)_Owner, (GUIDSTRING)_Summon, (GUIDSTRING)_Source, (INTEGER)_SharedDamage, (STRING)_DamageType)
+AND
+NRD_HitPrepare(_Summon, _Owner, _SharedHit)
+THEN
+NRD_HitAddDamage(_SharedHit, _DamageType, _SharedDamage);
+NRD_HitSetInt(_SharedHit, "Hit", 1);
+NRD_HitExecute(_SharedHit);
+// NRD_DebugLog("[OdinBSS:Story] Damage redirection complete");
+EXITSECTION
+
+ENDEXITSECTION

@@ -1,0 +1,67 @@
+Version 1
+SubGoalCombiner SGC_AND
+INITSECTION
+
+KBSECTION
+IF
+CharacterStatusApplied(_Summon, "SUMMONING", _)
+AND
+CharacterIsInCombat(_Summon, 1)
+THEN
+PROC_OBSS_ApplyBoonEffect_Strength(_Summon);
+
+IF
+ObjectEnteredCombat(_Summon, _)
+THEN
+PROC_OBSS_ApplyBoonEffect_Strength(_Summon);
+
+IF
+ObjectLeftCombat(_Summon, _)
+AND
+HasActiveStatus(_Summon, "OdinBSS_AGGREVATION_EFFECT", 1)
+THEN
+RemoveStatus(_Summon, "OdinBSS_AGGREVATION_EFFECT");
+
+// Set the AI tag on the Summon
+PROC
+PROC_OBSS_ApplyBoonEffect_Strength((GUIDSTRING)_Summon)
+AND
+HasActiveStatus(_Summon, "OdinBSS_BOON_AGGREVATION", 1)
+AND
+HasActiveStatus(_Summon, "OdinBSS_AGGREVATION_EFFECT", 0)
+THEN
+ApplyStatus(_Summon, "OdinBSS_AGGREVATION_EFFECT", -1.0, 1);
+SetTag(_Summon, "AI_PREFERRED_TARGET");
+// NRD_DebugLog("[OdinBSS:Story] Applied AI_PREFERRED_TARGET tag");
+
+IF
+ObjectTurnEnded(_Summon)
+AND
+HasActiveStatus(_Summon, "OdinBSS_AGGREVATION_EFFECT", 1)
+THEN
+DB_OBSS_Boons_StrengthTrack((GUIDSTRING)_Summon);
+
+// Summon has just had a turn with the Aggrevation effect.
+IF
+CombatRoundStarted(_, _)
+AND
+DB_OBSS_Boons_StrengthTrack(_Summon)
+THEN
+RemoveStatus(_Summon, "OdinBSS_AGGREVATION_EFFECT");
+
+IF
+CharacterStatusRemoved(_Summon, "OdinBSS_AGGREVATION_EFFECT", _)
+THEN
+ClearTag(_Summon, "AI_PREFERRED_TARGET");
+NOT DB_OBSS_Boons_StrengthTrack(_Summon);
+// NRD_DebugLog("[OdinBSS:Story] Cleared AI_PREFERRED_TARGET tag");
+
+IF
+CharacterDied(_Summon)
+AND
+DB_OBSS_Boons_StrengthTrack(_Summon)
+THEN
+NOT DB_OBSS_Boons_StrengthTrack(_Summon);
+EXITSECTION
+
+ENDEXITSECTION

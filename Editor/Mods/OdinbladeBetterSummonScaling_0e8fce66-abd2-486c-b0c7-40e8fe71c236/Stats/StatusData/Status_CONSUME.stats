@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<stats stat_object_definition_id="e2a8d59b-0e34-4a7c-bf5f-db7a2bb34cde">
+  <stat_objects>
+    <stat_object is_substat="false">
+      <fields>
+        <field name="Name" type="NameStatObjectFieldDefinition" value="OdinBSS_BOON_AGGREVATION" />
+        <field name="ForGameMaster" type="EnumerationStatObjectFieldDefinition" value="1" enumeration_type_name="YesNo" />
+        <field name="DisplayName" type="TranslatedStringStatObjectFieldDefinition" value="Boon of Aggravation" />
+        <field name="Icon" type="StringStatObjectFieldDefinition" value="OBBSS_Status_Boon_Aggrevation" />
+        <field name="FormatColor" type="EnumerationStatObjectFieldDefinition" value="30" enumeration_type_name="FormatStringColor" />
+        <field name="StatsId" type="StringStatObjectFieldDefinition" value="Stats_OdinBSS_Boon_Aggrevation" />
+        <field name="StackId" type="StringStatObjectFieldDefinition" value="Stack_OdinBSS_Boon_Aggrevation" />
+        <field name="Description" type="TranslatedStringStatObjectFieldDefinition" value="When this &lt;font color='#7F25D4'&gt;Summon&lt;/font&gt; enters combat, &lt;font color='#aa3938'&gt;enemies&lt;/font&gt; are significantly more likely to attack them until the round ends." />
+      </fields>
+    </stat_object>
+    <stat_object is_substat="false">
+      <fields>
+        <field name="Name" type="NameStatObjectFieldDefinition" value="OdinBSS_BOON_ARTILLERY" />
+        <field name="ForGameMaster" type="EnumerationStatObjectFieldDefinition" value="1" enumeration_type_name="YesNo" />
+        <field name="DisplayName" type="TranslatedStringStatObjectFieldDefinition" value="Boon of Artillery" />
+        <field name="Icon" type="StringStatObjectFieldDefinition" value="OBBSS_Status_Boon_Artillery" />
+        <field name="FormatColor" type="EnumerationStatObjectFieldDefinition" value="30" enumeration_type_name="FormatStringColor" />
+        <field name="StatsId" type="StringStatObjectFieldDefinition" value="Stats_OdinBSS_Boon_Artillery" />
+        <field name="StackId" type="StringStatObjectFieldDefinition" value="Stack_OdinBSS_Boon_Artillery" />
+        <field name="Description" type="TranslatedStringStatObjectFieldDefinition" value="At the start of each turn, this &lt;font color='#7F25D4'&gt;Summon&lt;/font&gt; gains an a &lt;font color='#40B606'&gt;20% Damage Boost&lt;/font&gt;. Moving disables this effect for the remainder of the turn." />
+      </fields>
+    </stat_object>
+    <stat_object is_substat="false">
+      <fields>
+        <field name="Name" type="NameStatObjectFieldDefinition" value="OdinBSS_BOON_CHAOS" />
+        <field name="ForGameMaster" type="EnumerationStatObjectFieldDefinition" value="1" enumeration_type_name="YesNo" />
+        <field name="DisplayName" type="TranslatedStringStatObjectFieldDefinition" value="Boon of Chaos" />
+        <field name="Icon" type="StringStatObjectFieldDefinition" value="OBBSS_Status_Boon_Chaos" />
+        <field name="FormatColor" type="EnumerationStatObjectFieldDefinition" value="30" enumeration_type_name="FormatStringColor" />
+        <field name="StatsId" type="StringStatObjectFieldDefinition" value="Stats_OdinBSS_Boon_Chaos" />
+        <field name="StackId" type="StringStatObjectFieldDefinition" value="Stack_OdinBSS_Boon_Chaos" />
+        <field name="Description" type="TranslatedStringStatObjectFieldDefinition" value="At the start of each turn, this &lt;font color='#7F25D4'&gt;Summon&lt;/font&gt; releases a volatile pulse, dealing &lt;font color='#c80030'&gt;chaos damage&lt;/font&gt; to &lt;font color='#aa3938'&gt;enemies&lt;/font&gt; within 4m." />
+      </fields>
+    </stat_object>
+    <stat_object is_substat="false">
+      <fields>
+        <field name="Name" type="NameStatObjectFieldDefinition" value="OdinBSS_BOON_MENDING" />
+        <field name="ForGameMaster" type="EnumerationStatObjectFieldDefinition" value="1" enumeration_type_name="YesNo" />
+        <field name="DisplayName" type="TranslatedStringStatObjectFieldDefinition" value="Boon of Mending" />
+        <field name="Icon" type="StringStatObjectFieldDefinition" value="OBBSS_Status_Boon_Mending" />
+        <field name="FormatColor" type="EnumerationStatObjectFieldDefinition" value="30" enumeration_type_name="FormatStringColor" />
+        <field name="StatsId" type="StringStatObjectFieldDefinition" value="Stats_OdinBSS_Boon_Mending" />
+        <field name="StackId" type="StringStatObjectFieldDefinition" value="Stack_OdinBSS_Boon_Mending" />
+        <field name="Description" type="TranslatedStringStatObjectFieldDefinition" value="When this &lt;font color='#7F25D4'&gt;Summon&lt;/font&gt; is healed, also restore &lt;font color='#40b606'&gt;20%&lt;/font&gt; of that amount to &lt;font color='#a8a8a8'&gt;Physical Armour&lt;/font&gt; and &lt;font color='#188ede'&gt;Magic Armour&lt;/font&gt;." />
+      </fields>
+    </stat_object>
+    <stat_object is_substat="false">
+      <fields>
+        <field name="Name" type="NameStatObjectFieldDefinition" value="OdinBSS_BOON_REDIRECTION" />
+        <field name="ForGameMaster" type="EnumerationStatObjectFieldDefinition" value="1" enumeration_type_name="YesNo" />
+        <field name="DisplayName" type="TranslatedStringStatObjectFieldDefinition" value="Boon of Redirection" />
+        <field name="Icon" type="StringStatObjectFieldDefinition" value="OBBSS_Status_Boon_Redirection" />
+        <field name="FormatColor" type="EnumerationStatObjectFieldDefinition" value="30" enumeration_type_name="FormatStringColor" />
+        <field name="StatsId" type="StringStatObjectFieldDefinition" value="Stats_OdinBSS_Boon_Redirection" />
+        <field name="StackId" type="StringStatObjectFieldDefinition" value="Stack_OdinBSS_Boon_Redirection" />
+        <field name="Description" type="TranslatedStringStatObjectFieldDefinition" value="When this &lt;font color='#7F25D4'&gt;Summon's&lt;/font&gt; owner uses the &lt;font color='#D040D0'&gt;Designate Redirection&lt;/font&gt; skill on this &lt;font color='#7F25D4'&gt;Summon&lt;/font&gt;, the owner will redirect &lt;font color='#40b606'&gt;30% of damage taken&lt;/font&gt; to the &lt;font color='#7F25D4'&gt;Summon&lt;/font&gt;." />
+      </fields>
+    </stat_object>
+    <stat_object is_substat="false">
+      <fields>
+        <field name="Name" type="NameStatObjectFieldDefinition" value="OdinBSS_BOON_VORACITY" />
+        <field name="ForGameMaster" type="EnumerationStatObjectFieldDefinition" value="1" enumeration_type_name="YesNo" />
+        <field name="DisplayName" type="TranslatedStringStatObjectFieldDefinition" value="Boon of Voracity" />
+        <field name="Icon" type="StringStatObjectFieldDefinition" value="OBBSS_Status_Boon_Voracity" />
+        <field name="FormatColor" type="EnumerationStatObjectFieldDefinition" value="30" enumeration_type_name="FormatStringColor" />
+        <field name="StatsId" type="StringStatObjectFieldDefinition" value="Stats_OdinBSS_Boon_Voracity" />
+        <field name="StackId" type="StringStatObjectFieldDefinition" value="Stack_OdinBSS_Boon_Voracity" />
+        <field name="Description" type="TranslatedStringStatObjectFieldDefinition" value="This &lt;font color='#7F25D4'&gt;Summon&lt;/font&gt; enters combat with an additional &lt;font color='#40b606'&gt;1 AP&lt;/font&gt;." />
+      </fields>
+    </stat_object>
+    <stat_object is_substat="false">
+      <fields>
+        <field name="Name" type="NameStatObjectFieldDefinition" value="OdinBSS_AGGREVATION_EFFECT" />
+        <field name="ForGameMaster" type="EnumerationStatObjectFieldDefinition" value="0" enumeration_type_name="YesNo" />
+        <field name="DisplayName" type="TranslatedStringStatObjectFieldDefinition" value="Aggravation Bonus" />
+        <field name="Description" type="TranslatedStringStatObjectFieldDefinition" value="&lt;font color='#aa3938'&gt;Enemies&lt;/font&gt; are significantly more likely to attack this target." />
+        <field name="Icon" type="StringStatObjectFieldDefinition" value="OBBSS_Status_Boon_Aggrevation" />
+        <field name="FormatColor" type="EnumerationStatObjectFieldDefinition" value="30" enumeration_type_name="FormatStringColor" />
+        <field name="StatsId" type="StringStatObjectFieldDefinition" value="Stats_OdinBSS_Aggrevation_Bonus" />
+        <field name="StackId" type="StringStatObjectFieldDefinition" value="Stack_OdinBSS_Aggrevation_Bonus" />
+        <field name="StatusEffect" type="StringStatObjectFieldDefinition" value="OdinBSS_Status_Boon_01:Dummy_Root" />
+      </fields>
+    </stat_object>
+    <stat_object is_substat="false">
+      <fields>
+        <field name="Name" type="NameStatObjectFieldDefinition" value="OdinBSS_ARTILLERY_BONUS" />
+        <field name="ForGameMaster" type="EnumerationStatObjectFieldDefinition" value="0" enumeration_type_name="YesNo" />
+        <field name="DisplayName" type="TranslatedStringStatObjectFieldDefinition" value="Artillery Bonus" />
+        <field name="Description" type="TranslatedStringStatObjectFieldDefinition" value="Moving removes this effect." />
+        <field name="Icon" type="StringStatObjectFieldDefinition" value="OBBSS_Status_Boon_Artillery" />
+        <field name="FormatColor" type="EnumerationStatObjectFieldDefinition" value="30" enumeration_type_name="FormatStringColor" />
+        <field name="StatsId" type="StringStatObjectFieldDefinition" value="Stats_OdinBSS_Artillery_Bonus" />
+        <field name="StackId" type="StringStatObjectFieldDefinition" value="Stack_OdinBSS_Artillery_Bonus" />
+        <field name="StatusEffect" type="StringStatObjectFieldDefinition" value="OdinBSS_Status_Boon_01:Dummy_Root" />
+      </fields>
+    </stat_object>
+    <stat_object is_substat="false">
+      <fields>
+        <field name="Name" type="NameStatObjectFieldDefinition" value="OdinBSS_REDIRECTION_EFFECT" />
+        <field name="ForGameMaster" type="EnumerationStatObjectFieldDefinition" value="0" enumeration_type_name="YesNo" />
+        <field name="DisplayName" type="TranslatedStringStatObjectFieldDefinition" value="Redirection Bonus" />
+        <field name="Description" type="TranslatedStringStatObjectFieldDefinition" value="This &lt;font color='#7F25D4'&gt;Summon&lt;/font&gt; is absorbing &lt;font color='#40b606'&gt;30% of damage taken&lt;/font&gt; from their owner." />
+        <field name="Icon" type="StringStatObjectFieldDefinition" value="OBBSS_Status_Boon_Redirection" />
+        <field name="FormatColor" type="EnumerationStatObjectFieldDefinition" value="30" enumeration_type_name="FormatStringColor" />
+        <field name="StatsId" type="StringStatObjectFieldDefinition" value="Stats_OdinBSS_Redirection_Bonus" />
+        <field name="StackId" type="StringStatObjectFieldDefinition" value="Stack_OdinBSS_Redirection_Bonus" />
+        <field name="StatusEffect" type="StringStatObjectFieldDefinition" value="OdinBSS_Status_Boon_01:Dummy_Root" />
+      </fields>
+    </stat_object>
+    <stat_object is_substat="false">
+      <fields>
+        <field name="Name" type="NameStatObjectFieldDefinition" value="OdinBSS_VORACITY_BONUS" />
+        <field name="ForGameMaster" type="EnumerationStatObjectFieldDefinition" value="0" enumeration_type_name="YesNo" />
+        <field name="DisplayName" type="TranslatedStringStatObjectFieldDefinition" value="Voracity Bonus" />
+        <field name="Icon" type="StringStatObjectFieldDefinition" value="OBBSS_Status_Boon_Voracity" />
+        <field name="FormatColor" type="EnumerationStatObjectFieldDefinition" value="30" enumeration_type_name="FormatStringColor" />
+        <field name="StatsId" type="StringStatObjectFieldDefinition" value="Stats_OdinBSS_Voracity_Bonus" />
+        <field name="StackId" type="StringStatObjectFieldDefinition" value="Stack_OdinBSS_Voracity_Bonus" />
+        <field name="StatusEffect" type="StringStatObjectFieldDefinition" value="OdinBSS_Status_Boon_01:Dummy_Root" />
+      </fields>
+    </stat_object>
+  </stat_objects>
+</stats>

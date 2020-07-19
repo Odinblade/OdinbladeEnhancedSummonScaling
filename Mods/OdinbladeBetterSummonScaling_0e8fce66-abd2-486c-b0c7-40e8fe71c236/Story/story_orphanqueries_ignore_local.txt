@@ -1,0 +1,1 @@
+DB_OBSS_SummonScaling_Talent 4

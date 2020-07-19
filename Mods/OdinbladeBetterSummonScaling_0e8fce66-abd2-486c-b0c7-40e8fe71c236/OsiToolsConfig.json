@@ -1,0 +1,8 @@
+{
+    "RequiredExtensionVersion": 49,
+    "ModTable": "OdinESS",
+    "FeatureFlags": [
+        "OsirisExtensions",
+        "Lua"
+    ]
+}

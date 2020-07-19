@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<save>
+    <header version="2" />
+    <version major="3" minor="6" revision="6" build="0" />
+    <region id="MetaData">
+        <node id="root">
+            <attribute id="Module" value="0e8fce66-abd2-486c-b0c7-40e8fe71c236" type="23" />
+            <attribute id="Name" value="OdinbladeBetterSummonScaling" type="23" />
+            <attribute id="Type" value="Add-on" type="23" />
+            <attribute id="UUID" value="6aae38a6-e995-4273-a181-8ffb459eb3b1" type="23" />
+        </node>
+    </region>
+</save>

@@ -1,0 +1,15 @@
+Version 1
+SubGoalCombiner SGC_AND
+INITSECTION
+
+KBSECTION
+// Use the Chaos skill at the start of the Summon's turn
+IF
+ObjectTurnStarted(_Summon)
+AND
+HasActiveStatus(_Summon, "OdinBSS_BOON_CHAOS", 1)
+THEN
+CharacterUseSkill((CHARACTERGUID)_Summon, "Shout_OdinBSS_Boon_Chaos_Cast", _Summon, 1, 1);
+EXITSECTION
+
+ENDEXITSECTION

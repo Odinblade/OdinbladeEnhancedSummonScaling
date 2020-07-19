@@ -1,0 +1,33 @@
+Version 1
+SubGoalCombiner SGC_AND
+INITSECTION
+
+KBSECTION
+// When the Summon is healed, restore a portion as Armor and Magic Armor.
+IF
+NRD_OnHeal(_Summon, _Source, _HealAmount, _HitHandle)
+AND
+HasActiveStatus(_Summon, "OdinBSS_BOON_MENDING", 1)
+AND
+NRD_StatusGetInt(_Summon, _HitHandle, "HealType", 1)
+AND
+NRD_CharacterGetStatInt(_Summon, "CurrentArmor", _CurrentArmour)
+AND
+NRD_CharacterGetStatInt(_Summon, "CurrentMagicArmor", _CurrentMagicArmour)
+AND
+Real(_HealAmount, _RealHealAmount)
+AND
+RealProduct(_RealHealAmount, 0.3, _RealArmourAmountToRestore)
+AND
+Integer(_RealArmourAmountToRestore, _ArmourAmountToRestore)
+AND
+IntegerSum(_CurrentArmour, _ArmourAmountToRestore, _NewArmour)
+AND
+IntegerSum(_CurrentMagicArmour, _ArmourAmountToRestore, _NewMagicArmour)
+THEN
+NRD_CharacterSetStatInt(_Summon, "CurrentArmor", _NewArmour);
+NRD_CharacterSetStatInt(_Summon, "CurrentMagicArmor", _NewMagicArmour);
+NRD_DebugLog("[OdinBSS:Story] Applied Armor and Magic Armor restoration from the Mending Boon.");
+EXITSECTION
+
+ENDEXITSECTION
