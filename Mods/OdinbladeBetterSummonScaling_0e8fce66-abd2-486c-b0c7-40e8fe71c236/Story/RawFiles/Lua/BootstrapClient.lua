@@ -7,7 +7,6 @@ Ext.Require("Client/OdinBSS_StatusDescriptionParams.lua")
 
 local ModuleLoading = function ()
     Ext.Print("[OdinBSS:BootstrapClient.lua] Module is loading.")
-    -- OverrideStats()
 end
 
 Ext.RegisterListener("ModuleLoading", ModuleLoading)
